@@ -1,0 +1,54 @@
+package com.djmanong.mall.cms.entity;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.util.Date;
+
+/**
+ * <p>
+ * 专题评论表
+ * </p>
+ *
+ * @author djmanong
+ * @since 2021-04-07
+ */
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
+@TableName("cms_subject_comment")
+@ApiModel(value="SubjectComment对象", description="专题评论表")
+public class SubjectComment implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @TableId(value = "id", type = IdType.AUTO)
+    private Long id;
+
+    @TableField("subject_id")
+    private Long subjectId;
+
+    @TableField("member_nick_name")
+    private String memberNickName;
+
+    @TableField("member_icon")
+    private String memberIcon;
+
+    @TableField("content")
+    private String content;
+
+    @TableField("create_time")
+    private Date createTime;
+
+    @TableField("show_status")
+    private Integer showStatus;
+
+
+}
