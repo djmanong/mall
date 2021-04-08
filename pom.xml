@@ -10,6 +10,7 @@
     <modules>
         <module>mall-common</module>
         <module>mall-api</module>
+        <module>mall-mbg</module>
     </modules>
 
     <packaging>pom</packaging>

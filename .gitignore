@@ -1,2 +1,10 @@
 *.iml
 /.idea/
+/mall-mbg/target/
+/mall-admin-web/target/
+/mall-oms/target/
+/mall-pms/target/
+/mall-sms/target/
+/mall-ums/target/
+/mall-api/target/
+/mall-common/target/
