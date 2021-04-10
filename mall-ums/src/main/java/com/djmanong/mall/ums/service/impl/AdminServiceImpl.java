@@ -32,4 +32,9 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         QueryWrapper<Admin> queryWrapper = new QueryWrapper<Admin>().eq("username", username).eq("password", md5Password);
         return adminMapper.selectOne(queryWrapper);
     }
+
+    @Override
+    public Admin getUserInfo(String userName) {
+        return adminMapper.selectOne(new QueryWrapper<Admin>().eq("username", userName));
+    }
 }

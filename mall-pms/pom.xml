@@ -42,12 +42,12 @@
             <!--</exclusions>-->
         </dependency>
 
-        <!-- logstash -->
-        <dependency>
-            <groupId>net.logstash.logback</groupId>
-            <artifactId>logstash-logback-encoder</artifactId>
-            <version>5.3</version>
-        </dependency>
+        <!--&lt;!&ndash; logstash &ndash;&gt;-->
+        <!--<dependency>-->
+        <!--    <groupId>net.logstash.logback</groupId>-->
+        <!--    <artifactId>logstash-logback-encoder</artifactId>-->
+        <!--    <version>5.3</version>-->
+        <!--</dependency>-->
     </dependencies>
 
     <build>

@@ -20,4 +20,11 @@ public interface AdminService extends IService<Admin> {
      * @return
      */
     Admin login(String username, String password);
+
+    /**
+     * 获取用户详情
+     * @param userName
+     * @return
+     */
+    Admin getUserInfo(String userName);
 }

@@ -1,12 +1,13 @@
 package com.djmanong.mall.admin.pms.controller;
 
-import com.alibaba.dubbo.config.annotation.Reference;
-import com.djmanong.mall.admin.pms.vo.PmsProductParam;
-import com.djmanong.mall.admin.pms.vo.PmsProductQueryParam;
 import com.djmanong.mall.pms.service.ProductService;
 import com.djmanong.mall.to.CommonResult;
+import com.djmanong.mall.vo.PageInfoVo;
+import com.djmanong.mall.vo.product.PmsProductParam;
+import com.djmanong.mall.vo.product.PmsProductQueryParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,12 +15,15 @@ import java.util.List;
 
 /**
  * 商品管理Controller
+ * @author DjManong
  */
+@CrossOrigin
 @RestController
 @Api(tags = "PmsProductController", description = "商品管理")
 @RequestMapping("/product")
 public class PmsProductController {
-    @Reference
+
+    @DubboReference
     private ProductService productService;
 
     @ApiOperation("创建商品")
@@ -49,8 +53,12 @@ public class PmsProductController {
     public Object getList(PmsProductQueryParam productQueryParam,
                           @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
                           @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
+
         //TODO 查询商品
-        return new CommonResult().success(null);
+        productQueryParam.setPageSize(Long.valueOf(pageSize));
+        productQueryParam.setPageNumber(Long.valueOf(pageNum));
+        PageInfoVo pageInfoVo = productService.productPageInfo(productQueryParam);
+        return new CommonResult().success(pageInfoVo);
     }
 
     @ApiOperation("根据商品名称或货号模糊查询")

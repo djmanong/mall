@@ -1,18 +1,19 @@
-package com.djmanong.mall.admin.pms.vo;
+package com.djmanong.mall.vo.product;
 
-import com.djmanong.mall.admin.validator.FlagValidator;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.Min;
+import java.io.Serializable;
 
 /**
  * 品牌传递参数
  * @author DjManong
  */
 @Data
-public class PmsBrandParam {
+public class PmsBrandParam implements Serializable {
+
     @ApiModelProperty(value = "品牌名称",required = true)
     @NotEmpty(message = "名称不能为空")
     private String name;
@@ -22,10 +23,10 @@ public class PmsBrandParam {
     @Min(value = 0, message = "排序最小为0")
     private Integer sort;
     @ApiModelProperty(value = "是否为厂家制造商")
-    @FlagValidator(value = {"0","1"}, message = "厂家状态不正确")
+    // @FlagValidator(value = {"0","1"}, message = "厂家状态不正确")
     private Integer factoryStatus;
     @ApiModelProperty(value = "是否进行显示")
-    @FlagValidator(value = {"0","1"}, message = "显示状态不正确")
+    // @FlagValidator(value = {"0","1"}, message = "显示状态不正确")
     private Integer showStatus;
     @ApiModelProperty(value = "品牌logo",required = true)
     @NotEmpty(message = "品牌logo不能为空")

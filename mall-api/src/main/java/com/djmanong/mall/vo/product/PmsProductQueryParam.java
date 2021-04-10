@@ -1,13 +1,16 @@
-package com.djmanong.mall.admin.pms.vo;
+package com.djmanong.mall.vo.product;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * 产品查询参数
+ * @author DjManong
  */
 @Data
-public class PmsProductQueryParam {
+public class PmsProductQueryParam implements Serializable {
     @ApiModelProperty("上架状态")
     private Integer publishStatus;
     @ApiModelProperty("审核状态")
@@ -20,5 +23,8 @@ public class PmsProductQueryParam {
     private Long productCategoryId;
     @ApiModelProperty("商品品牌编号")
     private Long brandId;
+
+    private Long pageSize = 5L;
+    private Long pageNumber = 1L;
 
 }

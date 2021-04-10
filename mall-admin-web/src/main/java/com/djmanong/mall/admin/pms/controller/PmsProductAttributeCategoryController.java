@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
  * 商品属性分类Controller
  * @author DjManong
  */
+
+@CrossOrigin
 @RestController
 @Api(tags = "PmsProductAttributeCategoryController", description = "商品属性分类管理")
 @RequestMapping("/productAttribute/category")

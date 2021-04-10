@@ -1,13 +1,13 @@
 package com.djmanong.mall.admin.pms.controller;
 
-import com.alibaba.dubbo.config.annotation.Reference;
-import com.djmanong.mall.admin.pms.vo.PmsProductAttributeParam;
 import com.djmanong.mall.pms.service.ProductAttributeService;
 import com.djmanong.mall.to.CommonResult;
+import com.djmanong.mall.vo.product.PmsProductAttributeParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,12 +15,15 @@ import java.util.List;
 
 /**
  * 商品属性管理Controller
+ * @author DjManong
  */
+@CrossOrigin
 @RestController
 @Api(tags = "PmsProductAttributeController", description = "商品属性管理")
 @RequestMapping("/productAttribute")
 public class PmsProductAttributeController {
-    @Reference
+
+    @DubboReference
     private ProductAttributeService productAttributeService;
 
     @ApiOperation("根据分类查询属性列表或参数列表")

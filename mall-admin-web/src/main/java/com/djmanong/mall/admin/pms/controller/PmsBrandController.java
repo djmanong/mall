@@ -1,8 +1,9 @@
 package com.djmanong.mall.admin.pms.controller;
 
-import com.djmanong.mall.admin.pms.vo.PmsBrandParam;
 import com.djmanong.mall.pms.service.BrandService;
 import com.djmanong.mall.to.CommonResult;
+import com.djmanong.mall.vo.PageInfoVo;
+import com.djmanong.mall.vo.product.PmsBrandParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.dubbo.config.annotation.DubboReference;
@@ -16,10 +17,12 @@ import java.util.List;
  * 品牌功能Controller
  * @author DjManong
  */
+@CrossOrigin
 @RestController
-@Api(tags = "PmsBrandController",description = "商品品牌管理")
+@Api(tags = "PmsBrandController", description = "商品品牌管理")
 @RequestMapping("/brand")
 public class PmsBrandController {
+
     @DubboReference
     private BrandService brandService;
 
@@ -68,11 +71,9 @@ public class PmsBrandController {
                             @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                             @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize) {
         CommonResult commonResult = new CommonResult();
+        PageInfoVo pageInfoVo = brandService.brandPageInfo(keyword, pageNum, pageSize);
 
-        //TODO 根据品牌名称分页获取品牌列表
-
-
-        return commonResult;
+        return commonResult.success(pageInfoVo);
     }
 
     @ApiOperation(value = "根据编号查询品牌信息")

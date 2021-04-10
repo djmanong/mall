@@ -1,11 +1,11 @@
 package com.djmanong.mall.admin.pms.controller;
 
-import com.alibaba.dubbo.config.annotation.Reference;
-import com.djmanong.mall.admin.pms.vo.PmsProductCategoryParam;
 import com.djmanong.mall.pms.service.ProductCategoryService;
 import com.djmanong.mall.to.CommonResult;
+import com.djmanong.mall.vo.product.PmsProductCategoryParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -14,12 +14,15 @@ import java.util.List;
 
 /**
  * 商品分类模块Controller
+ * @author DjManong
  */
+@CrossOrigin
 @RestController
 @Api(tags = "PmsProductCategoryController", description = "商品分类管理")
 @RequestMapping("/productCategory")
 public class PmsProductCategoryController {
-    @Reference
+
+    @DubboReference
     private ProductCategoryService productCategoryService;
 
     @ApiOperation("添加产品分类")

@@ -8,6 +8,7 @@ import com.djmanong.mall.ums.entity.Admin;
 import com.djmanong.mall.ums.service.AdminService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +26,7 @@ import java.util.Map;
  * @author DjManong
  * @CrossOrigin: 解决跨域问题
  */
+@Slf4j
 @CrossOrigin
 @RestController
 @Api(tags = "AdminController", description = "后台用户管理")
@@ -42,9 +45,25 @@ public class UmsAdminController {
 
     @ApiOperation(value = "用户注册")
     @PostMapping(value = "/register")
-    public Object register(@RequestBody UmsAdminParam umsAdminParam, BindingResult result) {
+    public Object register(@Valid @RequestBody UmsAdminParam umsAdminParam, BindingResult result) {
         Admin admin = null;
         //TODO 完成注册功能
+
+        // 校验错误数量
+        // int errorCount = result.getErrorCount();
+        // if (errorCount > 0) {
+        //     // 校验错误
+        //     List<FieldError> fieldErrors = result.getFieldErrors();
+        //     for (FieldError fieldError : fieldErrors) {
+        //         log.debug("属性: {}, 校验出错; 传来的值是: {}; 详细信息: {}", fieldError.getField(), fieldError.getRejectedValue(), fieldError.getDefaultMessage());
+        //     }
+        //     return new CommonResult().validateFailed(result);
+        // } else {
+        //     // 注册
+        // }
+
+        int i = 10 / 0;
+        log.debug("需要注册的用户详情: {}", umsAdminParam);
 
         return new CommonResult().success(admin);
     }
@@ -107,13 +126,17 @@ public class UmsAdminController {
     @ResponseBody
     public Object getAdminInfo(HttpServletRequest request) {
         String oldToken = request.getHeader(tokenHeader);
-        String userName = jwtTokenUtil.getUserNameFromToken(oldToken);
+        String userName = jwtTokenUtil.getUserNameFromToken(oldToken.substring(tokenHead.length()));
 
+        /*
+        * getOne是mybatis-plus生成的，而且带有泛型
+        * dubbo无法直接调用mybatis-plus中带泛型的service,可能会有兼容问题，最好不要远程调用
+        * */
         // Admin umsAdmin = adminService.getOne(new QueryWrapper<Admin>().eq("username",userName));
-        Admin umsAdmin = new Admin();
+        Admin umsAdmin = adminService.getUserInfo(userName);
         Map<String, Object> data = new HashMap<>();
-        data.put("username", umsAdmin.getUsername());
         data.put("roles", new String[]{"TEST"});
+        data.put("username", umsAdmin.getUsername());
         data.put("icon", umsAdmin.getIcon());
         return new CommonResult().success(data);
     }
