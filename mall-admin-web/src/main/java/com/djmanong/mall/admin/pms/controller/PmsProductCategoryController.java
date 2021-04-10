@@ -3,6 +3,7 @@ package com.djmanong.mall.admin.pms.controller;
 import com.djmanong.mall.pms.service.ProductCategoryService;
 import com.djmanong.mall.to.CommonResult;
 import com.djmanong.mall.vo.product.PmsProductCategoryParam;
+import com.djmanong.mall.vo.product.PmsProductCategoryWithChildrenItem;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.dubbo.config.annotation.DubboReference;
@@ -83,7 +84,9 @@ public class PmsProductCategoryController {
     @ApiOperation("查询所有一级分类及子分类[有难度]")
     @GetMapping(value = "/list/withChildren")
     public Object listWithChildren() {
-        //TODO 查询所有一级分类及子分类
-        return new CommonResult().success(null);
+        //TODO 查询所有一级分类及子分类, 查询任意菜单以及它下面的所有子菜单
+
+        List<PmsProductCategoryWithChildrenItem> items = productCategoryService.listCategoryWithChildrenItem(0);
+        return new CommonResult().success(items);
     }
 }
