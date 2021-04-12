@@ -32,22 +32,20 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-            <!--<exclusions>-->
-            <!--    <exclusion>-->
-            <!--        <groupId>org.junit.vintage</groupId>-->
-            <!--        <artifactId>junit-vintage-engine</artifactId>-->
-            <!--    </exclusion>-->
-            <!--</exclusions>-->
+            <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
-        <!--&lt;!&ndash; logstash &ndash;&gt;-->
-        <!--<dependency>-->
-        <!--    <groupId>net.logstash.logback</groupId>-->
-        <!--    <artifactId>logstash-logback-encoder</artifactId>-->
-        <!--    <version>5.3</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
