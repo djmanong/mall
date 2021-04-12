@@ -2,6 +2,7 @@ package com.djmanong.mall.pms.service;
 
 import com.djmanong.mall.pms.entity.ProductAttribute;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.djmanong.mall.vo.PageInfoVo;
 
 /**
  * <p>
@@ -13,4 +14,13 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ProductAttributeService extends IService<ProductAttribute> {
 
+    /**
+     * 查询某个属性分类下的所有销售属性和参数
+     * @param cid
+     * @param type
+     * @param pageSize
+     * @param pageNum
+     * @return
+     */
+    PageInfoVo getCategoryAttributes(Long cid, Integer type, Integer pageSize, Integer pageNum);
 }

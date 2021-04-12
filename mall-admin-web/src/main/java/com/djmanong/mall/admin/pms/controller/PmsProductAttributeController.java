@@ -2,6 +2,7 @@ package com.djmanong.mall.admin.pms.controller;
 
 import com.djmanong.mall.pms.service.ProductAttributeService;
 import com.djmanong.mall.to.CommonResult;
+import com.djmanong.mall.vo.PageInfoVo;
 import com.djmanong.mall.vo.product.PmsProductAttributeParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -21,6 +22,7 @@ import java.util.List;
 @RestController
 @Api(tags = "PmsProductAttributeController", description = "商品属性管理")
 @RequestMapping("/productAttribute")
+
 public class PmsProductAttributeController {
 
     @DubboReference
@@ -33,8 +35,10 @@ public class PmsProductAttributeController {
                           @RequestParam(value = "type") Integer type,
                           @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
                           @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
-        //TODO 根据分类查询属性列表或参数列表
-        return new CommonResult().success(null);
+
+        // 查出该分类下所有的销售属性和基本参数
+        PageInfoVo pageInfoVo = productAttributeService.getCategoryAttributes(cid, type, pageSize, pageNum);
+        return new CommonResult().success(pageInfoVo);
     }
 
     @ApiOperation("添加商品属性信息")

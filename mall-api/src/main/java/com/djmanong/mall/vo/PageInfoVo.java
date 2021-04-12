@@ -1,5 +1,6 @@
 package com.djmanong.mall.vo;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -33,4 +34,8 @@ public class PageInfoVo implements Serializable {
 
     @ApiModelProperty("当前页的页码")
     private Long pageNum;
+
+    public static PageInfoVo getPageInfoVo(IPage iPage, Long pageSize) {
+        return new PageInfoVo(iPage.getTotal(), iPage.getPages(), pageSize, iPage.getRecords(), iPage.getCurrent());
+    }
 }

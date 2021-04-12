@@ -7,6 +7,7 @@ import com.djmanong.mall.vo.product.PmsProductParam;
 import com.djmanong.mall.vo.product.PmsProductQueryParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import java.util.List;
  * 商品管理Controller
  * @author DjManong
  */
+@Slf4j
 @CrossOrigin
 @RestController
 @Api(tags = "PmsProductController", description = "商品管理")
@@ -30,7 +32,10 @@ public class PmsProductController {
     @PostMapping(value = "/create")
     public Object create(@RequestBody PmsProductParam productParam,
                          BindingResult bindingResult) {
-        //TODO 查询所有一级分类及子分类
+
+        log.info("得到要保存的数据: {}", productParam);
+        productService.saveProduct(productParam);
+        log.debug("当前线程: {} ===> id: {}", Thread.currentThread().getName(), Thread.currentThread().getId());
         return new CommonResult().success(null);
     }
 

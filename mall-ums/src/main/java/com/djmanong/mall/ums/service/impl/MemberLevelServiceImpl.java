@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.djmanong.mall.ums.entity.MemberLevel;
 import com.djmanong.mall.ums.mapper.MemberLevelMapper;
 import com.djmanong.mall.ums.service.MemberLevelService;
+import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
  * @since 2021-04-07
  */
 @Service
+@DubboService
 public class MemberLevelServiceImpl extends ServiceImpl<MemberLevelMapper, MemberLevel> implements MemberLevelService {
 
 }
