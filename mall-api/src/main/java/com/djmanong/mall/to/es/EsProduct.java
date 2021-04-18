@@ -44,6 +44,8 @@ public class EsProduct implements Serializable {
     private Integer sort;
     /**评论数量共享spu*/
     private Integer commentCount;
+
+    // 在es中, 嵌入式对象的mapping一定要用nested声明, 这样才能正确的检索到数据, 例如attrValueList和skuProductInfos
     /**商品的筛选属性(SPU属性)*/
     private List<EsProductAttributeValue> attrValueList;
 //    网络制式：3G 4G 5G，

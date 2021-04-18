@@ -13,6 +13,7 @@ import java.util.List;
 @Data
 public class EsSkuProductInfo extends SkuStock implements Serializable {
 
+    private static final long serialVersionUID = 8585492437892497973L;
     /**
      * sku的特定标题
      */

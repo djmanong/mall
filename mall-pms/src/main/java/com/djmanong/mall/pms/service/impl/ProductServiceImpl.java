@@ -15,9 +15,7 @@ import com.djmanong.mall.vo.PageInfoVo;
 import com.djmanong.mall.vo.product.PmsProductParam;
 import com.djmanong.mall.vo.product.PmsProductQueryParam;
 import io.searchbox.client.JestClient;
-import io.searchbox.core.Delete;
-import io.searchbox.core.DocumentResult;
-import io.searchbox.core.Index;
+import io.searchbox.core.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.aop.framework.AopContext;
@@ -29,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -160,22 +159,51 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
 
     }
 
-    private void deleteProductFromEs(Long id) {
-        Delete delete = new Delete.Builder(id.toString())
-                .index(EsConstant.PRODUCT_ES_INDEX)
-                .type(EsConstant.PRODUCT_INFO_ES_TYPE)
-                .build();
+    /**
+     * 查询es中是否存在某条数据
+     * @param id
+     * @return
+     */
+    private boolean searchProductFromEs(Long id) {
+        String queryJson = "{\n" +
+                "  \"query\": {\n" +
+                "    \"ids\": {\n" +
+                "      \"values\": [" + id.toString() + "]\n" +
+                "    }\n" +
+                "  }\n" +
+                "}";
+        Search search = new Search.Builder(queryJson)
+                .addIndex(EsConstant.PRODUCT_ES_INDEX)
+                .addType(EsConstant.PRODUCT_INFO_ES_TYPE).build();
         try {
-            DocumentResult execute = jestClient.execute(delete);
-            if (execute.isSucceeded()) {
-                log.info("ES中id为{}的商品下架成功", id);
-            } else {
-                log.error("ES中id为{}的商品下架失败", id);
+            SearchResult result = jestClient.execute(search);
+            return result.isSucceeded() && result.getHits(EsProduct.class).size() > 0;
+        } catch (IOException e) {
+            log.error("ES商品查询失败: {}" + e.getMessage());
+            return false;
+        }
+    }
+
+    private void deleteProductFromEs(Long id) {
+        if (searchProductFromEs(id)) {
+            Delete delete = new Delete.Builder(id.toString())
+                    .index(EsConstant.PRODUCT_ES_INDEX)
+                    .type(EsConstant.PRODUCT_INFO_ES_TYPE)
+                    .build();
+            try {
+                DocumentResult execute = jestClient.execute(delete);
+                if (execute.isSucceeded()) {
+                    log.info("ES中id为{}的商品下架成功", id);
+                } else {
+                    log.error("ES中id为{}的商品下架失败", id);
+                    deleteProductFromEs(id);
+                }
+            } catch (Exception e) {
                 deleteProductFromEs(id);
+                log.error("ES中id为{}的商品下架异常: {}", id, e.getMessage());
             }
-        } catch (Exception e) {
-            deleteProductFromEs(id);
-            log.error("ES中id为{}的商品下架异常: {}", id, e.getMessage());
+        } else {
+            log.info("ES中不存在id为{}的商品信息, 不进行删除操作", id);
         }
     }
 
