@@ -20,11 +20,10 @@ public class ProductSearchController {
     @DubboReference
     SearchProductService searchProductService;
 
-    @ApiOperation(value = "查询商品信息")
+    @ApiOperation(value = "检索商品信息")
     @GetMapping("/search")
     public SearchResponse productSearchResponse(SearchParam searchParam) {
-        SearchResponse searchResponse = searchProductService.searchProduct(searchParam);
-        return searchResponse;
+        return searchProductService.searchProduct(searchParam);
     }
 
 }
